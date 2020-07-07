@@ -16,3 +16,7 @@ exports.successHandler = (res, data = {}, message) => {
         data
     });
 }
+
+function addNewName(params) {
+    return "name";
+}
