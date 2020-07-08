@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "npm server.js",
-    "lint": "eslint"
+    "lint": "eslint '**/*.js' --ignore-pattern node_modules --fix"
   },
   "keywords": [],
   "author": "",
