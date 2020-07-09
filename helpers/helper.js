@@ -1,6 +1,7 @@
 'use script';
 
 const HttpStatus = require('http-status-codes');
+const crypto = require('crypto');
 
 exports.errorHandler = (res, httpCode, data = {}, message = null) => res.status(httpCode).json({
   status: 'error',
@@ -20,4 +21,25 @@ exports.generateHash = (string, salt = null) => {
   return {
     hashString, stringSalt,
   };
+};
+
+exports.generateUuid = () => crypto.randomBytes(64).toString('hex');
+
+exports.generateRandom = (length) => {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};
+
+exports.ActiveStatus = {
+  ACTIVE: 1,
+  INACTIVE: 2,
+  PENDING: 3,
+  DELETED: 4,
+  SUSPENDED: 5,
+  DEACTIVATED: 6,
 };

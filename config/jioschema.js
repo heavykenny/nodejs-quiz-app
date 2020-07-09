@@ -14,3 +14,11 @@ exports.validateUserLogin = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
 });
+
+exports.validateQuizCreation = Joi.object({
+  question: Joi.string().required(),
+  options: Joi.array().required(),
+  answer: Joi.array().required(),
+  type: Joi.number().required(),
+  active_status: Joi.number(),
+});

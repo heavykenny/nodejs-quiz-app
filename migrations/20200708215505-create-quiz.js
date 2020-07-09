@@ -1,41 +1,29 @@
-const ActiveStatus = require('../models/activestatus');
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Quizzes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      uuid: {
+      reference_code: {
         type: Sequelize.STRING,
       },
-      first_name: {
+      question: {
         type: Sequelize.STRING,
       },
-      last_name: {
-        type: Sequelize.STRING,
+      options: {
+        type: Sequelize.JSON,
       },
-      email: {
-        type: Sequelize.STRING,
+      answer: {
+        type: Sequelize.JSON,
       },
-      phone_number: {
-        type: Sequelize.STRING,
-      },
-      role: {
-        type: Sequelize.ENUM('host', 'player', 'admin'),
-      },
-      salt: {
-        type: Sequelize.STRING,
-      },
-      password: {
-        type: Sequelize.STRING,
+      type: {
+        type: Sequelize.INTEGER,
       },
       active_status: {
         type: Sequelize.INTEGER,
-        defaultValue: 1,
       },
       createdAt: {
         allowNull: false,
@@ -48,6 +36,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Quizzes');
   },
 };

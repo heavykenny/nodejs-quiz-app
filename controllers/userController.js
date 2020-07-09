@@ -36,3 +36,17 @@ exports.index = async (req, res) => {
   };
   return helper.successHandler(res, data);
 };
+
+exports.getUser = async (req, res) => {
+  const { body } = req;
+  const { reference_code } = body.params;
+  if (reference_code == null) {
+    return helper.errorHandler(res, HttpStatus.BAD_REQUEST, '', 'reference_code is required');
+  }
+
+  const response = await UserService.getUser(reference_code);
+  if (response.status === 'error') {
+    return helper.errorHandler(res, HttpStatus.BAD_REQUEST, response.data);
+  }
+  return helper.successHandler(res, response.data);
+};

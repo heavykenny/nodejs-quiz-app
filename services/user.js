@@ -1,4 +1,3 @@
-const crypto = require('crypto');
 const db = require('../models/index');
 const JWT = require('../config/jwt');
 const helper = require('../helpers/helper');
@@ -6,6 +5,7 @@ const helper = require('../helpers/helper');
 exports.createUser = async (data) => {
   const { password } = data;
   const { hashPassword, salt } = helper.generateHash(password);
+  const uuid = helper.generateUuid();
 
   try {
     const userCheck = await db.User.findOne({ where: { email: data.email } });
@@ -19,6 +19,7 @@ exports.createUser = async (data) => {
     }
 
     const user = await db.User.create({
+      uuid,
       first_name: data.first_name,
       last_name: data.last_name,
       email: data.email,
@@ -72,6 +73,7 @@ exports.loginUser = async (data) => {
 
     const body = {
       id: user.id,
+      uuid: user.uuid,
       email: user.email,
       role: user.role,
       first_name: user.first_name,
@@ -85,6 +87,44 @@ exports.loginUser = async (data) => {
       data: {
         message: 'User successfully logged in.',
         token,
+      },
+    };
+  } catch (err) {
+    return {
+      status: 'error',
+      data: {
+        message: err,
+      },
+    };
+  }
+};
+
+exports.getUser = async (data) => {
+  try {
+    const user = await db.User.findOne({ where: { uuid: data } });
+    if (!user) {
+      return {
+        status: 'error',
+        data: {
+          message: 'User not found',
+        },
+      };
+    }
+    const body = {
+      id: user.id,
+      uuid: user.uuid,
+      email: user.email,
+      role: user.role,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      phone_number: user.phone_number,
+      active_status: user.active_status,
+    };
+    return {
+      status: 'success',
+      data: {
+        message: 'User found.',
+        body,
       },
     };
   } catch (err) {
