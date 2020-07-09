@@ -26,10 +26,10 @@ module.exports = {
       data.push(seedData);
     }
 
-    return queryInterface.bulkInsert('Quizzes', data);
+    return queryInterface.bulkInsert('Questions', data);
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Quizzes', null, {});
+    await queryInterface.bulkDelete('Questions', null, {});
   },
 };

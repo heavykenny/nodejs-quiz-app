@@ -15,7 +15,7 @@ exports.validateUserLogin = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
-exports.validateQuizCreation = Joi.object({
+exports.validateQuestionCreation = Joi.object({
   question: Joi.string().required(),
   options: Joi.array().required(),
   answer: Joi.array().required(),
@@ -23,7 +23,7 @@ exports.validateQuizCreation = Joi.object({
   active_status: Joi.number(),
 });
 
-exports.validateQuizUpdate = Joi.object({
+exports.validateQuestionUpdate = Joi.object({
   question: Joi.string().required(),
   options: Joi.array().required(),
   answer: Joi.array().required(),

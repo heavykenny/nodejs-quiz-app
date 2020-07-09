@@ -1,22 +1,22 @@
 const db = require('../models/index');
 const helper = require('../helpers/helper');
 
-exports.getAllQuiz = async () => {
+exports.getAllQuestion = async () => {
   try {
-    const quiz = await db.Quiz.findAll({ where: { active_status: helper.ActiveStatus.ACTIVE } });
-    if (!quiz) {
+    const question = await db.Question.findAll({ where: { active_status: helper.ActiveStatus.ACTIVE } });
+    if (!question) {
       return {
         status: 'error',
         data: {
-          message: 'Quiz not found.',
+          message: 'Question not found.',
         },
       };
     }
     return {
       status: 'success',
       data: {
-        message: 'Quizzes found.',
-        quizzes: quiz,
+        message: 'Questions found.',
+        questions: question,
       },
     };
   } catch (err) {
@@ -29,24 +29,24 @@ exports.getAllQuiz = async () => {
   }
 };
 
-exports.getQuiz = async (referenceCode) => {
+exports.getQuestion = async (referenceCode) => {
   try {
-    const quiz = await db.Quiz.findOne({
-      where: { referenceCode, active_status: helper.ActiveStatus.ACTIVE },
+    const question = await db.Question.findOne({
+      where: { reference_code:referenceCode, active_status: helper.ActiveStatus.ACTIVE },
     });
-    if (!quiz) {
+    if (!question) {
       return {
         status: 'error',
         data: {
-          message: 'Quiz not found.',
+          message: 'Question not found.',
         },
       };
     }
     return {
       status: 'success',
       data: {
-        message: 'Quiz found.',
-        quiz,
+        message: 'Question found.',
+        question,
       },
     };
   } catch (err) {
@@ -59,22 +59,22 @@ exports.getQuiz = async (referenceCode) => {
   }
 };
 
-exports.deleteQuiz = async (referenceCode) => {
+exports.deleteQuestion = async (referenceCode) => {
   try {
-    const quiz = await db.Quiz.update({ active_status: helper.ActiveStatus.DELETED },
-      { where: { referenceCode } });
-    if (!quiz) {
+    const question = await db.Question.update({ active_status: helper.ActiveStatus.DELETED },
+      { where: { reference_code:referenceCode } });
+    if (!question) {
       return {
         status: 'error',
         data: {
-          message: 'Quiz not found.',
+          message: 'Question not found.',
         },
       };
     }
     return {
       status: 'success',
       data: {
-        message: 'Quiz successfully deleted.',
+        message: 'Question successfully deleted.',
       },
     };
   } catch (err) {
@@ -87,9 +87,9 @@ exports.deleteQuiz = async (referenceCode) => {
   }
 };
 
-exports.quizCreate = async (data) => {
+exports.questionCreate = async (data) => {
   try {
-    const quiz = await db.Quiz.create({
+    const question = await db.Question.create({
       reference_code: helper.generateRandom(6),
       question: data.question,
       options: data.options,
@@ -100,8 +100,8 @@ exports.quizCreate = async (data) => {
     return {
       status: 'success',
       data: {
-        message: 'Quiz successfully created.',
-        quiz,
+        message: 'Question successfully created.',
+        question,
       },
     };
   } catch (err) {
@@ -114,40 +114,40 @@ exports.quizCreate = async (data) => {
   }
 };
 
-exports.quizUpdate = async (referenceCode, data) => {
+exports.questionUpdate = async (referenceCode, data) => {
   try {
-    const getQuiz = await db.Quiz.findOne({ where: { referenceCode } });
+    const getQuestion = await db.Question.findOne({ where: { reference_code:referenceCode } });
 
-    if (!getQuiz) {
+    if (!getQuestion) {
       return {
         status: 'error',
         data: {
-          message: 'Quiz not found',
+          message: 'Question not found',
         },
       };
     }
 
-    const quiz = await db.Quiz.update({
+    const question = await db.Question.update({
       question: data.question,
       options: data.options,
       answer: data.answer,
       type: data.type,
-    }, { where: { referenceCode } });
+    }, { where: { reference_code:referenceCode } });
 
-    if (!quiz) {
+    if (!question) {
       return {
         status: 'error',
         data: {
-          message: 'Error when updating Quiz.',
+          message: 'Error when updating Question.',
         },
       };
     }
 
-    const returnData = await getQuiz.reload();
+    const returnData = await getQuestion.reload();
     return {
       status: 'success',
       data: {
-        message: 'Quiz successfully updated.',
+        message: 'Question successfully updated.',
         data: returnData,
       },
     };
