@@ -124,7 +124,7 @@ exports.getUser = async (data) => {
       status: 'success',
       data: {
         message: 'User found.',
-        body,
+        user: body,
       },
     };
   } catch (err) {

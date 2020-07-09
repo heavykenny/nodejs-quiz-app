@@ -19,7 +19,7 @@ module.exports = {
           faker.lorem.word(),
         ]),
         type: 1,
-        active_status: 1,
+        active_status: helper.ActiveStatus.ACTIVE,
         createdAt: new Date(),
         updatedAt: new Date(),
       };

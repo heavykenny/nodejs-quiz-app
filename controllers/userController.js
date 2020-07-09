@@ -39,12 +39,12 @@ exports.index = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   const { body } = req;
-  const { reference_code } = body.params;
-  if (reference_code == null) {
+  const { referenceCode } = body.params;
+  if (referenceCode == null) {
     return helper.errorHandler(res, HttpStatus.BAD_REQUEST, '', 'reference_code is required');
   }
 
-  const response = await UserService.getUser(reference_code);
+  const response = await UserService.getUser(referenceCode);
   if (response.status === 'error') {
     return helper.errorHandler(res, HttpStatus.BAD_REQUEST, response.data);
   }

@@ -1,4 +1,4 @@
-const ActiveStatus = require('../models/activestatus');
+const helper = require('../helpers/helper');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -35,7 +35,7 @@ module.exports = {
       },
       active_status: {
         type: Sequelize.INTEGER,
-        defaultValue: 1,
+        defaultValue: helper.ActiveStatus.ACTIVE,
       },
       createdAt: {
         allowNull: false,

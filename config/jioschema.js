@@ -22,3 +22,10 @@ exports.validateQuizCreation = Joi.object({
   type: Joi.number().required(),
   active_status: Joi.number(),
 });
+
+exports.validateQuizUpdate = Joi.object({
+  question: Joi.string().required(),
+  options: Joi.array().required(),
+  answer: Joi.array().required(),
+  type: Joi.number().required(),
+});

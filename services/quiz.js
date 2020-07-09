@@ -15,8 +15,8 @@ exports.getAllQuiz = async () => {
     return {
       status: 'success',
       data: {
-        message: 'Quiz found.',
-        quiz,
+        message: 'Quizzes found.',
+        quizzes: quiz,
       },
     };
   } catch (err) {
@@ -29,13 +29,10 @@ exports.getAllQuiz = async () => {
   }
 };
 
-exports.getQuiz = async (reference_code) => {
+exports.getQuiz = async (referenceCode) => {
   try {
     const quiz = await db.Quiz.findOne({
-      where: {
-        reference_code,
-        active_status: helper.ActiveStatus.ACTIVE,
-      },
+      where: { referenceCode, active_status: helper.ActiveStatus.ACTIVE },
     });
     if (!quiz) {
       return {
@@ -62,9 +59,10 @@ exports.getQuiz = async (reference_code) => {
   }
 };
 
-exports.deleteQuiz = async (reference_code) => {
+exports.deleteQuiz = async (referenceCode) => {
   try {
-    const quiz = await db.Quiz.update({ active_status: helper.ActiveStatus.DELETED }, { where: { reference_code } });
+    const quiz = await db.Quiz.update({ active_status: helper.ActiveStatus.DELETED },
+      { where: { referenceCode } });
     if (!quiz) {
       return {
         status: 'error',
@@ -104,6 +102,53 @@ exports.quizCreate = async (data) => {
       data: {
         message: 'Quiz successfully created.',
         quiz,
+      },
+    };
+  } catch (err) {
+    return {
+      status: 'error',
+      data: {
+        message: err,
+      },
+    };
+  }
+};
+
+exports.quizUpdate = async (referenceCode, data) => {
+  try {
+    const getQuiz = await db.Quiz.findOne({ where: { referenceCode } });
+
+    if (!getQuiz) {
+      return {
+        status: 'error',
+        data: {
+          message: 'Quiz not found',
+        },
+      };
+    }
+
+    const quiz = await db.Quiz.update({
+      question: data.question,
+      options: data.options,
+      answer: data.answer,
+      type: data.type,
+    }, { where: { referenceCode } });
+
+    if (!quiz) {
+      return {
+        status: 'error',
+        data: {
+          message: 'Error when updating Quiz.',
+        },
+      };
+    }
+
+    const returnData = await getQuiz.reload();
+    return {
+      status: 'success',
+      data: {
+        message: 'Quiz successfully updated.',
+        data: returnData,
       },
     };
   } catch (err) {
