@@ -4,8 +4,8 @@ const helper = require('../helpers/helper');
 
 exports.createUser = async (data) => {
   const { password } = data;
-  const { hashPassword, salt } = helper.generateHash(password);
-  const uuid = helper.generateUuid();
+  const responses = helper.generateHash(password);
+  const uuid = helper.generateUuid(20);
 
   try {
     const userCheck = await db.User.findOne({ where: { email: data.email } });
@@ -25,8 +25,8 @@ exports.createUser = async (data) => {
       email: data.email,
       phone_number: data.phone_number,
       role: data.role,
-      password: hashPassword,
-      salt,
+      password: responses.hashString,
+      salt: responses.stringSalt,
     });
 
     if (user) {
@@ -58,14 +58,12 @@ exports.loginUser = async (data) => {
         },
       };
     }
-    const { hashPassword } = helper.generateHash(data.password, user.salt);
+    const responses = helper.generateHash(data.password, user.salt);
 
-    if (user.password !== hashPassword) {
+    if (user.password !== responses.hashString) {
       return {
         status: 'error',
         data: {
-          salt: user.salt,
-          hash: hashPassword,
           message: 'Password entered is incorrect.',
         },
       };

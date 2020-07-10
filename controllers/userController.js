@@ -38,8 +38,7 @@ exports.index = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  const { body } = req;
-  const { referenceCode } = body.params;
+  const { referenceCode } = req.params;
   if (referenceCode == null) {
     return helper.errorHandler(res, HttpStatus.BAD_REQUEST, '', 'reference_code is required');
   }

@@ -132,6 +132,7 @@ exports.questionUpdate = async (referenceCode, data) => {
       options: data.options,
       answer: data.answer,
       type: data.type,
+      active_status: data.active_status,
     }, { where: { reference_code:referenceCode } });
 
     if (!question) {

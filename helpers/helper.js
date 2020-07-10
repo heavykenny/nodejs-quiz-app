@@ -23,7 +23,7 @@ exports.generateHash = (string, salt = null) => {
   };
 };
 
-exports.generateUuid = () => crypto.randomBytes(64).toString('hex');
+exports.generateUuid = (length = 15) => (crypto.randomBytes(64).toString('hex')).slice(0, length);
 
 exports.generateRandom = (length) => {
   let result = '';
