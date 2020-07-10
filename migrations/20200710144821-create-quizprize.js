@@ -1,18 +1,20 @@
 'use strict';
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('QuizTypes', {
+    await queryInterface.createTable('Quizprizes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING
-      },
-      active_status: {
+      quiz_challenge_id: {
         type: Sequelize.INTEGER
+      },
+      prize_details_id: {
+        type: Sequelize.INTEGER,
+        references: { model: 'Prizedetails', key: 'id' }
       },
       createdAt: {
         allowNull: false,
@@ -25,6 +27,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('QuizTypes');
+    await queryInterface.dropTable('Quizprizes');
   }
 };

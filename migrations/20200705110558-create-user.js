@@ -10,6 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       uuid: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       first_name: {
@@ -34,8 +35,10 @@ module.exports = {
         type: Sequelize.STRING,
       },
       active_status: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         defaultValue: helper.ActiveStatus.ACTIVE,
+        references: { model: 'ActiveStatuses', key: 'id' }
       },
       createdAt: {
         allowNull: false,

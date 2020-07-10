@@ -1,34 +1,36 @@
+'use strict';
 const helper = require('../helpers/helper');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Questions', {
+    await queryInterface.createTable('QuizChallenges', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      host_id: {
         type: Sequelize.INTEGER,
+        references: { model: 'Users', key: 'id' }
       },
-      reference_code: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      question: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      options: {
-        allowNull: false,
-        type: Sequelize.JSON,
-      },
-      answer: {
-        allowNull: false,
-        type: Sequelize.JSON,
-      },
-      type: {
+      quiz_type: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: 'QuizTypes', key: 'id' }
+      },
+      question_details: {
+        allowNull: false,
+        type: Sequelize.TEXT
+      },
+      rules: {
+        allowNull: false,
+        type: Sequelize.TEXT
+      },
+      quiz_price: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Quizprizes', key: 'id' }
       },
       active_status: {
         allowNull: false,
@@ -38,15 +40,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Questions');
-  },
+    await queryInterface.dropTable('QuizChallenges');
+  }
 };
