@@ -14,10 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   QuizChallenge.init({
+    question_ids: DataTypes.INTEGER,
     host_id: DataTypes.INTEGER,
     quiz_type: DataTypes.INTEGER,
-    question_ids: DataTypes.INTEGER,
-    quiz_price: DataTypes.INTEGER,
+    question_details: DataTypes.JSON,
+    rules: DataTypes.JSON,
+    active_status: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'QuizChallenge',

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const HttpStatus = require('http-status-codes');
 const helper = require('../helpers/helper');
 
-exports.generateAccessToken = (body) => jwt.sign(body, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: '1800s' });
+exports.generateAccessToken = (body) => jwt.sign(body, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: '7200s' });
 // eslint-disable-next-line consistent-return
 exports.authenticateToken = (req, res, next) => {
   const authHeader = req.headers.authorization;

@@ -21,16 +21,11 @@ module.exports = {
       },
       question_details: {
         allowNull: false,
-        type: Sequelize.TEXT
+        type: Sequelize.JSON
       },
       rules: {
         allowNull: false,
-        type: Sequelize.TEXT
-      },
-      quiz_price: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: { model: 'Quizprizes', key: 'id' }
+        type: Sequelize.JSON
       },
       active_status: {
         allowNull: false,

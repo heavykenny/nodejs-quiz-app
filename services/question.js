@@ -62,8 +62,8 @@ exports.getQuestion = async (referenceCode) => {
 exports.deleteQuestion = async (referenceCode) => {
   try {
     const question = await db.Question.update({ active_status: helper.ActiveStatus.DELETED },
-      { where: { reference_code:referenceCode } });
-    if (!question) {
+      { where: { active_status: helper.ActiveStatus.ACTIVE, reference_code:referenceCode } });
+    if (!question[0]){
       return {
         status: 'error',
         data: {
