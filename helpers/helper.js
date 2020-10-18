@@ -43,3 +43,7 @@ exports.ActiveStatus = {
   SUSPENDED: 5,
   DEACTIVATED: 6,
 };
+
+exports.getUserDetailsFromJWT = (req) => {
+  return req.user;
+}

@@ -11,6 +11,9 @@ module.exports = {
     dialectOptions: {
       bigNumberStrings: true,
     },
+    seederStorage: 'json',
+    seederStoragePath: 'sequelizeData.json',
+    seederStorageTableName: 'sequelize_data'
   },
   test: {
     username: process.env.DB_USER,
@@ -22,6 +25,9 @@ module.exports = {
     dialectOptions: {
       bigNumberStrings: true,
     },
+    seederStorage: 'json',
+    seederStoragePath: 'sequelizeData.json',
+    seederStorageTableName: 'sequelize_data'
   },
   production: {
     username: process.env.DB_USER,
@@ -33,5 +39,8 @@ module.exports = {
     dialectOptions: {
       bigNumberStrings: true,
     },
+    seederStorage: 'json',
+    seederStoragePath: 'sequelizeData.json',
+    seederStorageTableName: 'sequelize_data'
   },
 };

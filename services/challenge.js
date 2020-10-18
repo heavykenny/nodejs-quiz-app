@@ -4,7 +4,7 @@ const helper = require('../helpers/helper');
 exports.challengeCreate = async (data) => {
   try {
     const question = await db.QuizChallenge.create({
-      host_id: data.host_id ?? 1,
+      host_id: data.host_id ?? data.user.id,
       quiz_type: data.quiz_type,
       question_details: data.question_details,
       rules: data.rules,

@@ -4,6 +4,7 @@ const helper = require('../helpers/helper');
 
 exports.createUser = async (data) => {
   const { password } = data;
+  kko
   const responses = helper.generateHash(password);
   const uuid = helper.generateUuid(20);
 
@@ -69,15 +70,25 @@ exports.loginUser = async (data) => {
       };
     }
 
+    // const body = {
+    //   id: user.id,
+    //   uuid: user.uuid,
+    //   email: user.email,
+    //   role: user.role,
+    //   first_name: user.first_name,
+    //   last_name: user.last_name,
+    //   phone_number: user.phone_number,
+      
+    // };
+
     const body = {
-      id: user.id,
-      uuid: user.uuid,
-      email: user.email,
-      role: user.role,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      phone_number: user.phone_number,
-    };
+      "iss": "https://api.mypatricia.co/login",
+      "nbf": 1598570148,
+      "jti": "2XnjCc2HobAR8Q3y",
+      "sub": 75116,
+      "prv": "b91279978f11aa7bc5670487fff01e228253fe48",
+      "2fa_verified": true,
+     };
 
     const token = JWT.generateAccessToken(body);
     return {
